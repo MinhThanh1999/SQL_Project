@@ -155,7 +155,6 @@ ORDER BY quantity DESC;
 --query 8
 --Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017
 --Where Add_to_cart_rate = number product add_to_cart/number_product_view, Purchase_rate = number_product_purchase/number_product_view
---  
 with
 product_view as(
   SELECT
