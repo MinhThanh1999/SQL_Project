@@ -1,5 +1,5 @@
---We get this E-commerce dataset from Google Analytics dataset and perform it on Google Bigquery
---We have 8 queries, each addressing a different problem about E-commerce, as shown below
+-- We get this E-commerce dataset from Google Analytics dataset and perform it on Google Bigquery
+-- We have 8 queries, each addressing a different problem about E-commerce, as shown below
 
 --query 1
 --Calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)
@@ -13,8 +13,8 @@ WHERE _TABLE_SUFFIX BETWEEN '0101' AND '0331'
 GROUP BY 1
 ORDER BY 1;
 
---query 2 
---Calculate Bounce rate per traffic source in July 2017 (where Bounce_rate = num_bounce/total_visit) then place order by total_visit DESCENDING
+-- query 2 
+-- Calculate Bounce rate per traffic source in July 2017 (where Bounce_rate = num_bounce/total_visit) then place order by total_visit DESCENDING
 SELECT
     trafficSource.source as source,
     sum(totals.visits) as total_visits,
@@ -26,7 +26,7 @@ ORDER BY total_visits DESC;
 
 
 -- query 3
---Calculate revenue by traffic source by week, by month in June 2017
+-- Calculate revenue by traffic source by week, by month in June 2017
 with 
 month_data as(
   SELECT
@@ -92,7 +92,7 @@ FULL JOIN purchase_data
 using(month)
 order by month;
 
---query 5
+-- query 5
 -- Calculate average number of transactions per user that made a purchase in July 2017
 with cte as (
     SELECT date, totals.transactions, fullVisitorId, product.productRevenue FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
@@ -127,7 +127,7 @@ select
 from cte
 group by month;
 
---query 7
+-- query 7
 -- Figure out other products purchased by customers who purchased product "YouTube Men's Vintage Henley" in July 2017. The output only show product name and the quantity was ordered
 with buyer_list as(
     SELECT
@@ -152,9 +152,9 @@ WHERE product.v2ProductName != "YouTube Men's Vintage Henley"
 GROUP BY other_purchased_products
 ORDER BY quantity DESC;
 
---query 8
---Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017
---Where Add_to_cart_rate = number product add_to_cart/number_product_view, Purchase_rate = number_product_purchase/number_product_view
+-- query 8
+-- Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017
+-- Where Add_to_cart_rate = number product add_to_cart/number_product_view, Purchase_rate = number_product_purchase/number_product_view
 with
 product_view as(
   SELECT
